@@ -1,19 +1,25 @@
-import React from "react"
-import { useP5 } from "@gen/react-use-p5"
-
+import React, { useState } from "react"
+import Sketch from "react-p5"
+import p5 from "p5"
 import "./App.css"
-import { sketch } from "./sketch"
-
-const SketchComponent = () => {
-  const [setRef] = useP5(sketch)
-  // Canvas will be rendered as child of div
-  return <div ref={setRef} />
-}
 
 function App() {
+  const [position, setPosition] = useState(250)
+
+  const setup = (p5: p5, parent: Element): void => {
+    p5.createCanvas(500, 500).parent(parent)
+    p5.strokeWeight(5)
+  }
+
+  const draw = (p: p5): void => {
+    p.clear()
+    p.point(position, 250)
+  }
+
   return (
     <div className="App">
-      <SketchComponent />
+      {/* @ts-ignore */}
+      <Sketch setup={setup} draw={draw} />
     </div>
   )
 }
